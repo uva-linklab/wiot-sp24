@@ -11,7 +11,7 @@
 #define PSDU_MAX_SIZE (127u)
 #define FCS_LENGTH (2u) /* Length of the Frame Control Sequence */
 
-static int rf_setup(const struct device *dev)
+static int rf_setup()
 {
 	LOG_INF("RF setup started");
 	ARG_UNUSED(dev);
@@ -35,7 +35,7 @@ void nrf_802154_transmit_failed(uint8_t *frame, nrf_802154_tx_error_t error,
 }
 
 // callback fn for successful tx
-void nrf_802154_transmitted_raw(uint8_t *p_frame, 
+void nrf_802154_transmitted_raw(uint8_t *p_frame,
 	const nrf_802154_transmit_done_metadata_t *p_metadata) {
 	LOG_INF("frame was transmitted!");
 }
@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
 	LOG_DBG("channel: %u", nrf_802154_channel_get());
 
 	// set the pan_id (2 bytes, little-endian)
-	uint8_t src_pan_id[] = {0xcd, 0xab}; 
+	uint8_t src_pan_id[] = {0xcd, 0xab};
 	nrf_802154_pan_id_set(src_pan_id);
 
 	// set the extended address (8 bytes, little-endian)
@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
 	pkt[5] = 0xff; /* Destination PAN ID */
 	memcpy(&pkt[6], dst_extended_addr, 8); /* Destination extended address */
 	memcpy(&pkt[14], src_pan_id, 2); /* Source PAN ID */
-	memcpy(&pkt[16], src_extended_addr, 8);/* Source extended address */ 
+	memcpy(&pkt[16], src_extended_addr, 8);/* Source extended address */
 	pkt[24] = 0xAA; /* Payload */
 	pkt[25] = 0xBB; /* */
 	pkt[26] = 0xCC; /* */
@@ -73,16 +73,16 @@ int main(int argc, char **argv) {
 			.frame_props = NRF_802154_TRANSMITTED_FRAME_PROPS_DEFAULT_INIT,
 			.cca = true
 		};
-	
+
 	while(1) {
 		// send the packet
 		if(!nrf_802154_transmit_raw(pkt, &metadata)) {
 			LOG_ERR("driver could not schedule the transmission procedure.");
 		}
 		// sleep for 10 seconds
-		k_sleep(K_MSEC(10000)); 
+		k_sleep(K_MSEC(10000));
 	}
-	
+
 	return 0;
 }
 

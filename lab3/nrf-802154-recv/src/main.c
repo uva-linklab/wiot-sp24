@@ -24,7 +24,7 @@ static void pkt_hexdump(uint8_t *pkt, uint8_t length) {
 	printk("\n");
 }
 
-static int rf_setup(const struct device *dev)
+static int rf_setup()
 {
 	LOG_INF("RF setup started");
 	printk("RF setup started\n");
@@ -49,7 +49,7 @@ int main(void) {
 	nrf_802154_auto_ack_set(false);
 	LOG_DBG("channel: %u", nrf_802154_channel_get());
 	printf("channel: %u\n", nrf_802154_channel_get());
-	
+
 	// set the pan_id (2 bytes, little-endian)
 	uint8_t pan_id[] = {0xcd, 0xab};
 	nrf_802154_pan_id_set(pan_id);
