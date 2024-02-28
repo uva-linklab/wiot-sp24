@@ -28,7 +28,6 @@ static int rf_setup()
 {
 	LOG_INF("RF setup started");
 	printk("RF setup started\n");
-	ARG_UNUSED(dev);
 
 	/* nrf radio driver initialization */
 	nrf_802154_init();
