@@ -7,9 +7,3 @@ correct decoder.
 
 You must modify your group's `group/groupX.py` file to correctly decode your
 device's payload.
-
-Configuration
--------------
-
-You need a username and password to connect to the TTN MQTT broker. Download the
-`config.ini` file from the assignment and copy it into this directory.
