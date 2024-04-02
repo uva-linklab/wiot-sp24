@@ -92,7 +92,7 @@ def on_message(client, userdata, message):
 
 
 # MQTT client setup
-client = mqtt.Client()
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1)
 
 # Setup callbacks.
 client.on_connect = on_connect
